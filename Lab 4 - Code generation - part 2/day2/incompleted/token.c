@@ -2,7 +2,12 @@
 #include <ctype.h>
 #include "token.h"
 
-
+/*
+  Cấu trúc dữ liệu lưu trữ các từ khóa
+  Mỗi từ khóa bao gồm một chuỗi và một token type
+  Các từ khóa được sắp xếp theo thứ tự từ điển
+  Cần cập nhật KEYWORDS_COUNT khi thêm từ khóa
+*/
 struct {
   char string[MAX_IDENT_LEN + 1];
   TokenType tokenType;

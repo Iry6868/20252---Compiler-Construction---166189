@@ -2,7 +2,12 @@
 #define __ERROR_H__
 #include "token.h"
 
-
+/*
+  Cấu trúc dữ liệu lưu trữ thông tin lỗi
+  Mỗi lỗi bao gồm một mã lỗi và một thông điệp
+  Cần cập nhật số lượng lỗi khi thêm một lỗi mới
+  Cần cập nhật thông điệp khi thêm một lỗi mới
+*/
 typedef enum {
   ERR_END_OF_COMMENT,
   ERR_IDENT_TOO_LONG,

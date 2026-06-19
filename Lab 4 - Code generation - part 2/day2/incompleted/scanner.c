@@ -15,7 +15,7 @@ extern int currentChar;
 
 extern CharCode charCodes[];
 
-
+/***************************************************************/
 
   while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_SPACE))
     readChar();
@@ -232,7 +232,7 @@ extern CharCode charCodes[];
 }
 
 
-
+/******************************************************************/
 
 
 

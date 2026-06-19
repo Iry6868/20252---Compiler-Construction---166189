@@ -1,6 +1,28 @@
 #include "charcode.h"
 
-
+/*
+  Mảng charCodes[]: chứa thông tin về các ký tự trong bảng mã ASCII
+  Mỗi ký tự được ánh xạ vào một trong các giá trị sau:
+  CHAR_SPACE: ký tự trắng
+  CHAR_LETTER: ký tự chữ
+  CHAR_DIGIT: ký tự số
+  CHAR_PLUS: ký tự '+'
+  CHAR_MINUS: ký tự '-'
+  CHAR_TIMES: ký tự '*'
+  CHAR_SLASH: ký tự '/'
+  CHAR_LT: ký tự '<'
+  CHAR_GT: ký tự '>'
+  CHAR_EXCLAIMATION: ký tự '!'
+  CHAR_EQ: ký tự '='
+  CHAR_COMMA: ký tự ','
+  CHAR_PERIOD: ký tự '.'
+  CHAR_COLON: ký tự ':'
+  CHAR_SEMICOLON: ký tự ';'
+  CHAR_SINGLEQUOTE: ký tự '''
+  CHAR_LPAR: ký tự '('
+  CHAR_RPAR: ký tự ')'
+  CHAR_UNKNOWN: ký tự không xác định
+*/
 
 CharCode charCodes[256] = {
   CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN, CHAR_UNKNOWN,

@@ -16,21 +16,17 @@ extern Type* intType;
 extern Type* charType;
 extern SymTab* symtab;
 
-void scan(void) { 
   Token* tmp = currentToken;
   currentToken = lookAhead;
   lookAhead = getValidToken();
   free(tmp);
 }
 
-void eat(TokenType tokenType) { 
   if (lookAhead->tokenType == tokenType) {
-    
     scan();
   } else missingToken(tokenType, lookAhead->lineNo, lookAhead->colNo);
 }
 
-void compileProgram(void) { 
   Object* program;
 
   eat(KW_PROGRAM);
@@ -50,7 +46,6 @@ void compileProgram(void) {
   exitBlock();
 }
 
-void compileConstDecls(void) { 
   Object* constObj;
   ConstantValue* constValue;
 
@@ -71,7 +66,6 @@ void compileConstDecls(void) {
   }
 }
 
-void compileTypeDecls(void) { 
   Object* typeObj;
   Type* actualType;
 
@@ -93,7 +87,6 @@ void compileTypeDecls(void) {
   } 
 }
 
-void compileVarDecls(void) { 
   Object* varObj;
   Type* varType;
 
@@ -112,7 +105,6 @@ void compileVarDecls(void) {
   } 
 }
 
-void compileBlock(void) { 
   Instruction* jmp;
   
   jmp = genJ(DC_VALUE);
@@ -130,7 +122,6 @@ void compileBlock(void) {
   eat(KW_END);
 }
 
-void compileSubDecls(void) { 
   while ((lookAhead->tokenType == KW_FUNCTION) || (lookAhead->tokenType == KW_PROCEDURE)) {
     if (lookAhead->tokenType == KW_FUNCTION)
       compileFuncDecl();
@@ -138,7 +129,6 @@ void compileSubDecls(void) {
   }
 }
 
-void compileFuncDecl(void) { 
   Object* funcObj;
   Type* returnType;
 
@@ -168,7 +158,6 @@ void compileFuncDecl(void) {
   exitBlock();
 }
 
-void compileProcDecl(void) { 
   Object* procObj;
 
   eat(KW_PROCEDURE);
@@ -192,7 +181,6 @@ void compileProcDecl(void) {
   exitBlock();
 }
 
-ConstantValue* compileUnsignedConstant(void) { 
   ConstantValue* constValue;
   Object* obj;
 
@@ -219,7 +207,6 @@ ConstantValue* compileUnsignedConstant(void) {
   return constValue;
 }
 
-ConstantValue* compileConstant(void) { 
   ConstantValue* constValue;
 
   switch (lookAhead->tokenType) {
@@ -243,7 +230,6 @@ ConstantValue* compileConstant(void) {
   return constValue;
 }
 
-ConstantValue* compileConstant2(void) { 
   ConstantValue* constValue;
   Object* obj;
 
@@ -267,7 +253,6 @@ ConstantValue* compileConstant2(void) {
   return constValue;
 }
 
-Type* compileType(void) { 
   Type* type;
   Type* elementType;
   int arraySize;
@@ -306,7 +291,6 @@ Type* compileType(void) {
   return type;
 }
 
-Type* compileBasicType(void) { 
   Type* type;
 
   switch (lookAhead->tokenType) {
@@ -325,7 +309,6 @@ Type* compileBasicType(void) {
   return type;
 }
 
-void compileParams(void) { 
   if (lookAhead->tokenType == SB_LPAR) {
     eat(SB_LPAR);
     compileParam();
@@ -337,7 +320,6 @@ void compileParams(void) {
   }
 }
 
-void compileParam(void) { 
   Object* param;
   Type* type;
   enum ParamKind paramKind = PARAM_VALUE;
@@ -356,7 +338,6 @@ void compileParam(void) {
   declareObject(param);
 }
 
-void compileStatements(void) { 
   compileStatement();
   while (lookAhead->tokenType == SB_SEMICOLON) {
     eat(SB_SEMICOLON);
@@ -384,19 +365,16 @@ void compileStatement(void) {
   case KW_FOR:
     compileForSt();
     break;
-    
   case SB_SEMICOLON:
   case KW_END:
   case KW_ELSE:
     break;
-    
   default:
     error(ERR_INVALID_STATEMENT, lookAhead->lineNo, lookAhead->colNo);
     break;
   }
 }
 
-Type* compileLValue(void) { 
   Object* var;
   Type* varType;
 
@@ -432,7 +410,6 @@ Type* compileLValue(void) {
   return varType;
 }
 
-void compileAssignSt(void) { 
   Type* varType;
   Type* expType;
 
@@ -445,7 +422,6 @@ void compileAssignSt(void) {
   genST();
 }
 
-void compileCallSt(void) { 
   Object* proc;
 
   eat(KW_CALL);
@@ -471,7 +447,6 @@ void compileGroupSt(void) {
   eat(KW_END);
 }
 
-void compileIfSt(void) { 
   Instruction* fjInstruction;
   Instruction* jInstruction;
 
@@ -492,7 +467,6 @@ void compileIfSt(void) {
   }
 }
 
-void compileWhileSt(void) { 
   CodeAddress beginWhile;
   Instruction* fjInstruction;
 
@@ -506,7 +480,6 @@ void compileWhileSt(void) {
   updateFJ(fjInstruction, getCurrentCodeAddress());
 }
 
-void compileForSt(void) { 
   CodeAddress beginLoop;
   Instruction* fjInstruction;
   Type* varType;
@@ -550,7 +523,6 @@ void compileForSt(void) {
 
 }
 
-void compileArgument(Object* param) { 
   Type* type;
 
   if (param->paramAttrs->kind == PARAM_VALUE) {
@@ -562,7 +534,6 @@ void compileArgument(Object* param) {
   }
 }
 
-void compileArguments(ObjectNode* paramList) { 
   ObjectNode* node = paramList;
 
   switch (lookAhead->tokenType) {
@@ -586,7 +557,6 @@ void compileArguments(ObjectNode* paramList) {
     
     eat(SB_RPAR);
     break;
-    
   case SB_TIMES:
   case SB_SLASH:
   case SB_PLUS:
@@ -612,7 +582,6 @@ void compileArguments(ObjectNode* paramList) {
   }
 }
 
-void compileCondition(void) { 
   Type* type1;
   Type* type2;
   TokenType op;
@@ -647,7 +616,6 @@ void compileCondition(void) {
   type2 = compileExpression();
   checkTypeEquality(type1,type2);
 
-  switch (op) { 
   case SB_EQ:
     genEQ();
     break;
@@ -672,7 +640,6 @@ void compileCondition(void) {
 
 }
 
-Type* compileExpression(void) { 
   Type* type;
   
   switch (lookAhead->tokenType) {
@@ -693,7 +660,6 @@ Type* compileExpression(void) {
   return type;
 }
 
-Type* compileExpression2(void) { 
   Type* type;
 
   type = compileTerm();
@@ -703,7 +669,6 @@ Type* compileExpression2(void) {
 }
 
 
-Type* compileExpression3(Type* argType1) { 
   Type* argType2;
   Type* resultType;
 
@@ -728,7 +693,6 @@ Type* compileExpression3(Type* argType1) {
 
     resultType = compileExpression3(argType1);
     break;
-    
   case KW_TO:
   case KW_DO:
   case SB_RPAR:
@@ -752,7 +716,6 @@ Type* compileExpression3(Type* argType1) {
   return resultType;
 }
 
-Type* compileTerm(void) { 
   Type* type;
   type = compileFactor();
   type = compileTerm2(type);
@@ -760,7 +723,6 @@ Type* compileTerm(void) {
   return type;
 }
 
-Type* compileTerm2(Type* argType1) { 
   Type* argType2;
   Type* resultType;
 
@@ -785,7 +747,6 @@ Type* compileTerm2(Type* argType1) {
 
     resultType = compileTerm2(argType1);
     break;
-    
   case SB_PLUS:
   case SB_MINUS:
   case KW_TO:
@@ -811,7 +772,6 @@ Type* compileTerm2(Type* argType1) {
   return resultType;
 }
 
-Type* compileFactor(void) { 
   Type* type;
   Object* obj;
 
@@ -890,7 +850,6 @@ Type* compileFactor(void) {
   return type;
 }
 
-Type* compileIndexes(Type* arrayType) { 
   Type* type;
 
   
@@ -911,7 +870,6 @@ Type* compileIndexes(Type* arrayType) {
   return arrayType;
 }
 
-int compile(char *fileName) { 
   if (openInputStream(fileName) == IO_ERROR)
     return IO_ERROR;
 
@@ -921,8 +879,6 @@ int compile(char *fileName) {
   initSymTab();
 
   compileProgram();
-  
-  
   
 
   cleanSymTab();

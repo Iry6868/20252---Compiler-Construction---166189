@@ -10,7 +10,7 @@ void freeScope(Scope* scope);
 void freeObjectList(ObjectNode *objList);
 void freeReferenceList(ObjectNode *objList);
 
-
+/******************* Object and scope management ******************************/
 SymTab* symtab;
 Type* intType;
 Type* charType;
@@ -20,7 +20,7 @@ Object* writelnProcedure;
 Object* readiFunction;
 Object* readcFunction;
 
-
+/******************* Type utilities ******************************/
 
   Type* type = (Type*) malloc(sizeof(Type));
   type->typeClass = TP_INT;
@@ -80,7 +80,7 @@ Object* readcFunction;
   return 0;
 }
 
-
+/******************* Constant utility ******************************/
 
   ConstantValue* value = (ConstantValue*) malloc(sizeof(ConstantValue));
   value->type = TP_INT;
@@ -103,7 +103,7 @@ Object* readcFunction;
   return value;
 }
 
-
+/******************* Object utilities ******************************/
 
   Scope* scope = (Scope*) malloc(sizeof(Scope));
   scope->objList = NULL;
@@ -262,7 +262,7 @@ Object* createParameterObject(char *name, enum ParamKind kind) {
   return NULL;
 }
 
-
+/******************* others ******************************/
 
   Object* param;
 
